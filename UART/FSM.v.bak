@@ -1,0 +1,107 @@
+module FSM (
+input          D_Valid,
+input              Clk,
+input            Reset,
+input     Serial_frame,
+input        Parity_EN,
+input       Parity_out,
+input           finish,
+output   reg     busy, 
+output   reg  activate,
+output   reg  Serial_Data
+);
+ 
+wire Start_bit;
+wire Stop_bit;
+assign Start_bit = 1'b0;
+assign Stop_bit = 1'b1;
+  
+localparam IDLE           = 3'b000;
+localparam START          = 3'b001;
+localparam SERIALIZATION  = 3'b011;
+localparam PARITY         = 3'b010;
+localparam STOP           = 3'b110;
+  
+reg [2:0] current_state,
+             next_state;
+             
+always @ (posedge Clk or negedge Reset)
+  begin
+    if (!Reset)
+      begin
+        current_state <= IDLE;
+      end
+    else
+      begin
+        current_state <= next_state;
+      end
+  end
+	  
+always @(*)
+  begin
+    case(current_state)
+	  IDLE :   begin
+	              if(!D_Valid)
+			  begin
+			     next_state = current_state;
+			     activate = 1'b0;
+			     busy = 1'b0;
+	                   end
+		     else
+			  begin
+		             next_state = START;
+		         end
+		   end
+	  START :  begin
+	               Serial_Data = Start_bit ;	
+		       activate = 1'b1;
+		       busy = 1'b1;
+		       next_state = SERIALIZATION ;
+                   end
+	  SERIALIZATION : begin
+	                    if(!finish)
+			       begin
+				 activate = 1'b1;
+				 busy = 1'b1;
+			         Serial_Data = Serial_frame;
+				 next_state = current_state;
+			       end
+			   else
+			     begin
+				  activate = 1'b0;
+				  busy = 1'b1;
+				  next_state = PARITY;
+			     end
+			  end
+	  PARITY :  begin
+	               if(!Parity_EN)
+		           begin
+			      busy = 1'b1;
+			      activate = 1'b0;
+			      next_state = STOP;
+			   end
+			else
+                          begin
+				 Serial_Data = Parity_out;
+				 busy = 1'b1;
+				 activate = 1'b0;
+				 next_state = STOP;
+                          end					 
+	            end
+	  STOP  :  begin
+	                 Serial_Data = Stop_bit ;
+			 busy = 1'b1;
+			 activate = 1'b0;
+			 next_state = IDLE;
+	           end
+	  default : begin
+	              Serial_Data = 1'b1;
+		      busy = 1'b1;
+		      activate = 1'b0;
+		      next_state = IDLE;
+		   end
+					  	  
+  endcase
+end
+   
+endmodule   

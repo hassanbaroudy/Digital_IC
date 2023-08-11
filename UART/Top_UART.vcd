@@ -1,0 +1,380 @@
+$date
+	Sat Sep 25 14:23:31 2021
+$end
+$version
+	ModelSim Version 2020.4
+$end
+$timescale
+	1ns
+$end
+
+$scope module Top_UART_tb $end
+$var parameter 32 ! P_Data_Width $end
+$var reg 8 " P_Data [7:0] $end
+$var reg 1 # D_Valid $end
+$var reg 1 $ Clk $end
+$var reg 1 % Reset $end
+$var reg 1 & Parity_EN $end
+$var reg 1 ' Parity_TYP $end
+$var wire 1 ( busy $end
+$var wire 1 ) Serial_Data $end
+
+$scope task reset $end
+$upscope $end
+
+$scope task Initialization $end
+$upscope $end
+
+$scope task Data_Valid $end
+$upscope $end
+
+$scope module DUT $end
+$var parameter 32 * P_Data_Width $end
+$var wire 1 + P_Data [7] $end
+$var wire 1 , P_Data [6] $end
+$var wire 1 - P_Data [5] $end
+$var wire 1 . P_Data [4] $end
+$var wire 1 / P_Data [3] $end
+$var wire 1 0 P_Data [2] $end
+$var wire 1 1 P_Data [1] $end
+$var wire 1 2 P_Data [0] $end
+$var wire 1 3 D_Valid $end
+$var wire 1 4 Clk $end
+$var wire 1 5 Reset $end
+$var wire 1 6 Parity_EN $end
+$var wire 1 7 Parity_TYP $end
+$var wire 1 ( busy $end
+$var wire 1 ) Serial_Data $end
+$var wire 1 8 Serial_frame $end
+$var wire 1 9 finish $end
+$var wire 1 : activate $end
+$var wire 1 ; Parity_out $end
+
+$scope module UART_Serializer $end
+$var parameter 32 < P_Data_Width $end
+$var wire 1 + P_Data [7] $end
+$var wire 1 , P_Data [6] $end
+$var wire 1 - P_Data [5] $end
+$var wire 1 . P_Data [4] $end
+$var wire 1 / P_Data [3] $end
+$var wire 1 0 P_Data [2] $end
+$var wire 1 1 P_Data [1] $end
+$var wire 1 2 P_Data [0] $end
+$var wire 1 : activate $end
+$var wire 1 5 Reset $end
+$var wire 1 4 Clk $end
+$var reg 1 = finish $end
+$var reg 1 > Serial_frame $end
+$var reg 8 ? P_Data_reg [7:0] $end
+$var reg 4 @ counter [3:0] $end
+$upscope $end
+
+$scope module UART_Parity $end
+$var parameter 32 A P_Data_Width $end
+$var wire 1 + P_Data [7] $end
+$var wire 1 , P_Data [6] $end
+$var wire 1 - P_Data [5] $end
+$var wire 1 . P_Data [4] $end
+$var wire 1 / P_Data [3] $end
+$var wire 1 0 P_Data [2] $end
+$var wire 1 1 P_Data [1] $end
+$var wire 1 2 P_Data [0] $end
+$var wire 1 7 Parity_TYP $end
+$var reg 1 B Parity_out $end
+$var wire 1 C Even_parity $end
+$var wire 1 D Odd_parity $end
+$var wire 1 E Even $end
+$var wire 1 F Odd $end
+$upscope $end
+
+$scope module UART_FSM $end
+$var parameter 3 G IDLE $end
+$var parameter 3 H START $end
+$var parameter 3 I SERIALIZATION $end
+$var parameter 3 J PARITY $end
+$var parameter 3 K STOP $end
+$var wire 1 3 D_Valid $end
+$var wire 1 4 Clk $end
+$var wire 1 5 Reset $end
+$var wire 1 8 Serial_frame $end
+$var wire 1 6 Parity_EN $end
+$var wire 1 ; Parity_out $end
+$var wire 1 9 finish $end
+$var reg 1 L busy $end
+$var reg 1 M activate $end
+$var reg 1 N Serial_Data $end
+$var wire 1 O Start_bit $end
+$var wire 1 P Stop_bit $end
+$var reg 3 Q current_state [2:0] $end
+$var reg 3 R next_state [2:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx "
+0#
+0$
+1%
+0&
+0'
+x=
+x>
+bx ?
+bx @
+xB
+1L
+0M
+1N
+bx Q
+b0 R
+b1000 !
+b1000 *
+b1000 <
+b1000 A
+b0 G
+b1 H
+b11 I
+b10 J
+b110 K
+1(
+1)
+x8
+x9
+0:
+x;
+xC
+xD
+0E
+1F
+0O
+1P
+07
+06
+15
+04
+03
+x2
+x1
+x0
+x/
+x.
+x-
+x,
+x+
+$end
+#3
+1$
+14
+1=
+b0 @
+b0 Q
+19
+0L
+0(
+#5
+0%
+05
+b0 ?
+0=
+09
+#6
+0$
+04
+#9
+1$
+14
+#10
+1%
+b11111111 "
+12
+11
+10
+1/
+1.
+1-
+1,
+1+
+15
+1D
+0C
+0B
+0;
+#12
+0$
+04
+#15
+1#
+1$
+13
+14
+b1 R
+1=
+19
+#18
+0$
+04
+#21
+1$
+14
+b1 Q
+0N
+1M
+1L
+b11 R
+0)
+1:
+1(
+#24
+0$
+04
+#27
+1$
+14
+b11111111 ?
+0>
+b1 @
+0=
+b11 Q
+08
+09
+#30
+0$
+04
+#33
+1$
+14
+1>
+b1111111 ?
+b10 @
+18
+1N
+1)
+#35
+0#
+03
+#36
+0$
+04
+#39
+1$
+14
+b111111 ?
+b11 @
+#42
+0$
+04
+#45
+1$
+14
+b11111 ?
+b100 @
+#48
+0$
+04
+#51
+1$
+14
+b1111 ?
+b101 @
+#54
+0$
+04
+#57
+1$
+14
+b111 ?
+b110 @
+#60
+0$
+04
+#63
+1$
+14
+b11 ?
+b111 @
+#66
+0$
+04
+#69
+1$
+14
+b1 ?
+b1000 @
+#72
+0$
+04
+#75
+1$
+14
+1=
+b0 @
+19
+0M
+b10 R
+0:
+#78
+0$
+04
+#81
+1$
+14
+b10 Q
+b110 R
+#84
+0$
+04
+#87
+1$
+14
+b110 Q
+b0 R
+#90
+0$
+04
+#93
+1$
+14
+b0 Q
+0L
+0(
+#96
+0$
+04
+#99
+1$
+14
+#102
+0$
+04
+#105
+1$
+14
+#108
+0$
+04
+#111
+1$
+14
+#114
+0$
+04
+#117
+1$
+14
+#120
+0$
+04
+#123
+1$
+14
+#126
+0$
+04
+#129
+1$
+14
+#132
+0$
+04
