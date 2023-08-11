@@ -1,0 +1,69 @@
+module Clk_divider #(parameter Div_ratio_width = 4)
+(
+input wire                        ref_clk,
+input wire                        reset,
+input wire                        enable,
+input wire  [Div_ratio_width-1:0] division_ratio,
+output wire                       divided_clk
+);
+
+reg  [Div_ratio_width-1:0]      counter;
+wire                             is_odd;
+wire [Div_ratio_width-1:0]   half_ratio;
+
+assign is_odd = division_ratio[0];
+assign half_ratio = division_ratio>>1;
+
+always @(posedge ref_clk or negedge reset)
+  begin
+    if(!reset)
+	  begin
+	    divided_clk <= 1'b0;
+        counter <= 'b0;
+	  end
+	else if(!enable)
+	  begin
+	    divided_clk <= ref_clk;
+	    counter <= 'b0;
+      end
+	else if(is_odd)  
+      begin
+	    if(((divided_clk) & counter == half_ratio+1) | ((~divided_clk) & counter == half_ratio))
+		  begin
+		    divided_clk <= ~divided_clk;
+			counter <= 'b1;               //return to count from 1 till half of the ratio
+		  end
+		else
+		  begin
+		    divided_clk <= divided_clk;
+			counter <= counter + 'b1;
+		  end
+ 	  end
+	else
+	  begin
+	    if(counter == half_ratio)
+		  begin
+		    divided_clk <= ~divided_clk;
+			counter <= 'b1;
+		  end
+		else
+		  begin
+		    divided_clk <= divided_clk;
+			counter <= counter + 'b1;
+		  end
+      end
+  end
+  
+  always @(negedge ref_clk)
+    begin
+	  if(!(enable))
+	    begin
+		  divided_clk <= ref_clk;
+	    end
+	  else
+	    begin
+		  divided_clk <= divided_clk;
+		end
+	end
+
+endmodule

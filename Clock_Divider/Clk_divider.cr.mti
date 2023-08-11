@@ -1,0 +1,15 @@
+{D:/Digital course/Verilog/Clock divider/Hassan's Code/Clk_divider.v} {1 {vlog -work work -vopt -stats=none {D:/Digital course/Verilog/Clock divider/Hassan's Code/Clk_divider.v}
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module Clk_divider
+
+Top level modules:
+	Clk_divider
+
+} {} {}} {D:/Digital course/Verilog/Clock divider/Hassan's Code/Clk_divider_tb.v} {1 {vlog -work work -vopt -stats=none {D:/Digital course/Verilog/Clock divider/Hassan's Code/Clk_divider_tb.v}
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module Clk_divider_tb
+
+Top level modules:
+	Clk_divider_tb
+
+} {} {}}
