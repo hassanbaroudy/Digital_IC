@@ -1,0 +1,1 @@
+run 150 ; coverage report -codeALL -cvg -verbose;
